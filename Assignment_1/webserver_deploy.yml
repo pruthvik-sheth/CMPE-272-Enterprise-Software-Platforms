@@ -1,0 +1,62 @@
+---
+- name: Deploying web servers on virtual machines 1 & 2
+  hosts: myWebServers
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Installing the nginx package
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Starting the nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Setting VM number dynamically for html content
+      set_fact:
+        server_number: "{{ '1' if 'virtual_machine_1' in inventory_hostname else '2' }}"
+
+    - name: Creating index.html with custom message
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Hello World</title>
+            <style>
+                body {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                }
+                h1 {
+                    font-size: 50px;
+                    font-weight: bold;
+                }
+            </style>
+          </head>
+          <body>
+            <h1>Hello World from SJSU-{{ server_number }}</h1>
+          </body>
+          </html>
+
+
+    - name: Configuring nginx to listen on the port 8080
+      ansible.builtin.lineinfile:
+        path: /etc/nginx/sites-available/default
+        regexp: 'listen\s+80\s+default_server;'
+        line: 'listen 8080 default_server;'
+      notify: Restart nginx
+
+  handlers:
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted

@@ -1,0 +1,20 @@
+- name: Undeploying web servers
+  hosts: myWebServers
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Stop nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: stopped
+
+    - name: Remove nginx package
+      ansible.builtin.apt:
+        name: nginx
+        state: absent
+
+    - name: Remove index.html file
+      ansible.builtin.file:
+        path: /var/www/html/index.html
+        state: absent
