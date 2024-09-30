@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #121212;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #121212;
+  color: #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.app-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #bb86fc;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.post-box {
+  background-color: #1e1e1e;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  margin-bottom: 25px;
+}
+
+.post-textarea {
+  width: 100%;
+  height: 130px;
+  background-color: #121212;
+  color: #e0e0e0;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 16px;
+  outline: none;
+  resize: none;
+}
+
+.post-textarea::placeholder {
+  color: #888;
+}
+
+.post-textarea:focus {
+  border-color: #bb86fc;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.post-button, .retrieve-button, .delete-button {
+  background-color: #333;
+  color: #e0e0e0;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.post-button:hover, .retrieve-button:hover, .delete-button:hover {
+  background-color: #bb86fc;
+  color: #121212;
+}
+
+.retrieve-button, .delete-button {
+  background-color: #444;
+}
+
+.retrieve-button:hover, .delete-button:hover {
+  background-color: #03dac6;
+  color: #121212;
+}
+
+.post-display {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.post-display h2 {
+  color: #bb86fc;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.post-display p {
+  font-size: 16px;
+  color: #e0e0e0;
+}
+
+.error-message {
+  color: #cf6679;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    width: 95%;
+    padding: 30px;
+  }
+
+  .app-title {
+    font-size: 22px;
+  }
+
+  .post-textarea {
+    height: 120px;
+  }
+
+  .post-button, .retrieve-button, .delete-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .post-display h2 {
+    font-size: 18px;
+  }
+}
