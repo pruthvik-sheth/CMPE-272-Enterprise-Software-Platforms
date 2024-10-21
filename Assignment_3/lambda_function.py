@@ -9,17 +9,18 @@ s3 = boto3.client('s3')
 
 def lambda_handler(event, context):
     # List of doge image keys in S3
-    doge_images = ["doge1.jpg", "doge2.jpg", "doge3.jpg", "doge4.jpg", "doge5.jpg"]
+    doge_images = ["doge1.jpg", "doge2.jpg", "doge3.jpg"]
     
     # Randomly select a doge image
     selected_doge = random.choice(doge_images)
     
     # Load randomly selected base image
-    response = s3.get_object(Bucket='doge-meme-generator', Key=selected_doge)
+    response = s3.get_object(Bucket='doge-meme-bucket', Key=selected_doge)
     image = Image.open(BytesIO(response['Body'].read()))
     
     # Prepare drawing context
     draw = ImageDraw.Draw(image)
+    s3.download_file('doge-meme-bucket', 'comic.ttf', '/tmp/comic.ttf')
     font = ImageFont.truetype("/tmp/comic.ttf", 30)
     
     # List of doge phrases
@@ -46,6 +47,8 @@ def lambda_handler(event, context):
         'body': json.dumps({'image': img_str}),
         'headers': {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Methods': 'POST,OPTIONS'
         }
     }
