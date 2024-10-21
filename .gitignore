@@ -3,3 +3,6 @@ secrets
 .venv
 node_modules
 __pycache__
+PIL
+pillow-11.0.0.dist-info
+pillow.libs
